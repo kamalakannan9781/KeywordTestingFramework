@@ -88,5 +88,10 @@ public static void validate() {
 	Assert.assertEquals(result, "Proceed to checkout (2 items)");
 	System.out.println("Test passed");
 }
+public static void quitBrowser() throws InterruptedException {
+	
+	driver.quit();
+	Thread.sleep(2000);
+}
 	
 }

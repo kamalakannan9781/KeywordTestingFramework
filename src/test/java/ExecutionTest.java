@@ -1,5 +1,6 @@
 import java.io.IOException;
 
+import org.apache.poi.util.SystemOutLogger;
 import org.junit.Test;
 
 public class ExecutionTest {
@@ -13,8 +14,9 @@ public class ExecutionTest {
 		int sheetkeyword=PropertiesUtility.setSheetKeywordProperties();		
 		int sheetdata=PropertiesUtility.setSheetDataProperties();		
 		ExcelUtility.setexcel(path,sheetnumber);
-		int value=ExcelUtility.getrowCount(path, sheetrowcount);
-		int rowcount=value-1;		
+		int value=ExcelUtility.getrowCount(path, sheetrowcount);		
+		int rowcount=value-1;	
+		System.out.println("The value of rowcount is :" +rowcount);
 		for(int i=0;i<=rowcount;i++)
 		{
 			String keyword=ExcelUtility.getdata(i,sheetkeyword);			
@@ -83,6 +85,12 @@ public class ExecutionTest {
 			else if(keyword.equals("validate"))
 			{
 				ActionsKeywords.validate();
+				
+				
+			}
+			else if(keyword.equals("quit browser"))
+			{
+				ActionsKeywords.quitBrowser();
 				
 				
 			}
