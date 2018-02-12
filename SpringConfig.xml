@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+<bean id="openbrowser" class="org.Mytesting.BusinessLogic">
+</bean>
+<bean id="navigate" class="org.Mytesting.BusinessLogic">
+<property name="url" value="https://www.amazon.in" />
+</bean>
+<bean id="entername" class="org.Mytesting.BusinessLogic">
+<property name="message" value="This is welcome" />
+</bean>
+<bean id="clickclassname" class="org.Mytesting.BusinessLogic">
+<property name="message" value="This is welcome" />
+</bean>
+<bean id="clickxpath" class="org.Mytesting.BusinessLogic">
+<property name="message" value="This is welcome" />
+</bean>
+<bean id="swithtab" class="org.Mytesting.BusinessLogic">
+<property name="message" value="This is welcome" />
+</bean>
+<bean id="closebrowser" class="org.Mytesting.BusinessLogic">
+<property name="message" value="This is welcome" />
+</bean>
+<bean id="quitbrowser" class="org.Mytesting.BusinessLogic">
+<property name="message" value="This is welcome" />
+</bean>
+<bean id="swithparent" class="org.Mytesting.BusinessLogic">
+<property name="message" value="This is welcome" />
+</bean>
+<bean id="verify" class="org.Mytesting.BusinessLogic">
+<property name="verifydata" value="Proceed to checkout (2 items)" />
+</bean>
+
+</beans>
