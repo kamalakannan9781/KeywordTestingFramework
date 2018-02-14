@@ -1,5 +1,6 @@
 package org.Mytesting;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -15,6 +16,9 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.FileSystemResource;
 
+
+
+import io.appium.java_client.ios.IOSDriver;
 import junit.framework.Assert;
 
 public class BusinessLogic {
@@ -29,7 +33,7 @@ public class BusinessLogic {
 	public String url;
 	public String locator;
 	public String product;
-	PropertiesUtility oPropertiesUtility= new PropertiesUtility();
+	//PropertiesUtility oPropertiesUtility= new PropertiesUtility();
 	
 	
 	 public String buildTag = System.getenv("BUILD_TAG");
@@ -45,7 +49,7 @@ public class BusinessLogic {
 	     */
 	    private ThreadLocal<WebDriver> webDriver = new ThreadLocal<WebDriver>();
 	    
-
+	    private ThreadLocal<IOSDriver> iosDriver = new ThreadLocal<IOSDriver>();
 	    /**
 	     * ThreadLocal variable which contains the Sauce Job Id.
 	     */
@@ -62,6 +66,14 @@ public class BusinessLogic {
 	    public String getSessionId() {
 	        return sessionId.get();
 	    }
+	    
+	    /**
+	     * @return the {@link iosDriver} for the current thread
+	     */
+	    public IOSDriver getiosDriver() {
+	        return iosDriver.get();
+	    }
+	   
 	
 	
 	
@@ -152,12 +164,20 @@ public class BusinessLogic {
 	}
 	public static void verifydata(String verifydata,WebDriver driver) {	
 		driver.findElement(By.id("hlb-ptc-btn-native")).isEnabled();
-		String result=driver.findElement(By.id("hlb-ptc-btn-native")).getText();		
+		String result=driver.findElement(By.id("hlb-ptc-btn-native")).getText().trim();
+		System.out.println("result value is :"+result);
+		Assert.assertEquals(result, verifydata);
+	}
+	public static void verifydata1(String verifydata,WebDriver driver) {	
+		driver.findElement(By.xpath(".//*[@id='hlb-subcart']/div[1]/span/span[1]")).isEnabled();
+		String result=driver.findElement(By.id(".//*[@id='hlb-subcart']/div[1]/span/span[1]")).getText();
+		System.out.println("result value is :"+result);
 		Assert.assertEquals(result, verifydata);
 	}
 	
-	
 	public void entername(String locator,String product,WebDriver driver) throws InterruptedException {		
+		driver.findElement(By.name(locator)).isDisplayed();
+		driver.findElement(By.name(locator)).isEnabled();
 		driver.findElement(By.name(locator)).clear();
 		driver.findElement(By.name(locator)).sendKeys(product);
 		Thread.sleep(3000);
@@ -167,7 +187,8 @@ public class BusinessLogic {
 		driver.findElement(By.className(locator)).sendKeys(Keys.RETURN);
 		Thread.sleep(1000);
 	}
-	public void clickxpath(String locator,WebDriver driver) throws InterruptedException {
+	public void clickxpath(String locator,WebDriver driver) throws InterruptedException {		
+		driver.findElement(By.xpath(locator)).isDisplayed();
 		driver.findElement(By.xpath(locator)).isEnabled();
 		driver.findElement(By.xpath(locator)).click();
 		Thread.sleep(1000);
@@ -219,6 +240,41 @@ public class BusinessLogic {
         String id = ((RemoteWebDriver) getWebDriver()).getSessionId().toString();
         sessionId.set(id);
     }
-	
+	protected void createDrivermobile(
+            String platformName,
+            String deviceName,
+            String platformVersion,
+            String appiumVersion,
+            String deviceOrientation,
+            String methodName)
+            throws MalformedURLException, UnexpectedException {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+
+        capabilities.setCapability("platformName", platformName);
+        capabilities.setCapability("platformVersion", platformVersion);
+        capabilities.setCapability("deviceName", deviceName);
+        capabilities.setCapability("deviceOrientation", deviceOrientation);
+        capabilities.setCapability("appiumVersion", appiumVersion);
+        capabilities.setCapability("name", methodName);
+
+        String app = "https://github.com/saucelabs-sample-test-frameworks/Java-Junit-Appium-iOS/blob/master/resources/SauceGuineaPig-sim-debug.app.zip?raw=true";
+
+        capabilities.setCapability("app", app);
+
+        if (buildTag != null) {
+            capabilities.setCapability("build", buildTag);
+        }
+
+        // Launch remote browser and set it as the current thread
+        
+        
+       // iosDriver.set(new IOSDriver(new URL("https://" + PropertiesUtility.getUsername() + ":" + PropertiesUtility.getAccesskey() + "@ondemand.saucelabs.com:443/wd/hub"),capabilities));
+       // iosDriver.set(new IOSDriver(
+      //          new URL("https://" + PropertiesUtility.getUsername() + ":" + PropertiesUtility.getAccesskey() + "@ondemand.saucelabs.com:443/wd/hub"),
+      //            capabilities));
+
+        String id = ((RemoteWebDriver) getiosDriver()).getSessionId().toString();
+        sessionId.set(id);
+    }
 
 }

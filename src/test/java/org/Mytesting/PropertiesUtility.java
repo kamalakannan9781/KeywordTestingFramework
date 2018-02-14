@@ -17,7 +17,7 @@ public class PropertiesUtility {
 		return path;
 		
 	}
-	public String getUsername() throws IOException
+	public static String getUsername() throws IOException
 	{
 		FileReader reader= new FileReader("src\\main\\java\\data.properties");
 		Properties properties = new Properties();
@@ -27,7 +27,7 @@ public class PropertiesUtility {
 		return username;
 		
 	}
-	public String getAccesskey() throws IOException
+	public static String getAccesskey() throws IOException
 	{
 		FileReader reader= new FileReader("src\\main\\java\\data.properties");
 		Properties properties = new Properties();

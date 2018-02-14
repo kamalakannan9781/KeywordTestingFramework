@@ -97,6 +97,7 @@ public class BeanLogic {
 		BeanFactory factory=new XmlBeanFactory(new FileSystemResource(xmlfile));
 		buslogic=(BusinessLogic) factory.getBean(PropertiesUtility.getverifyBean());	
 		String verifydata=buslogic.showverifydata();
+		System.out.println("verifydata value :"+verifydata);
 	    buslogic.verifydata(verifydata,driver);
 	}
 	
